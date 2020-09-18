@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -219,10 +218,31 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             mForecastAdapter.setWeatherData(null);
             loadWeatherData();
             return true;
+        } else if (id == R.id.action_showMap) {
+            // DONE (2) Launch the map when the map menu item is clicked
+            final String address = SunshinePreferences.DEFAULT_WEATHER_LOCATION;
+            // DONE (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+            final Uri geoLocation = new Uri.Builder()
+                    .scheme("geo")
+                    .appendPath("0,0")
+                    .appendQueryParameter("q", address)
+                    .build();
+
+            // DONE (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
+            showMap(geoLocation);
+            return true;
         }
 
-        // TODO (2) Launch the map when the map menu item is clicked
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showMap(final Uri uri) {
+        safeStartActivity(new Intent(Intent.ACTION_VIEW, uri));
+    }
+
+    private void safeStartActivity(final Intent intent) {
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
