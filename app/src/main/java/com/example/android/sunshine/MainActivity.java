@@ -15,7 +15,6 @@
  */
 package com.example.android.sunshine;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -116,10 +115,11 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
      */
     @Override
     public void onClick(String weatherForDay) {
-        Context context = this;
-        Class destinationClass = DetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        // TODO (1) Pass the weather to the DetailActivity
+        final Intent intentToStartDetailActivity = new Intent(this, DetailActivity.class);
+
+        // DONE (1) Pass the weather to the DetailActivity
+        intentToStartDetailActivity.putExtra("weather", weatherForDay);
+
         startActivity(intentToStartDetailActivity);
     }
 
