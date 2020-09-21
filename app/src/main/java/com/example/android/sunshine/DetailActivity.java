@@ -1,8 +1,12 @@
 package com.example.android.sunshine;
 
+import android.content.ClipDescription;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
@@ -17,9 +21,9 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mWeatherDisplay = (TextView) findViewById(R.id.tv_display_weather);
+        mWeatherDisplay = findViewById(R.id.tv_display_weather);
 
-        Intent intentThatStartedThisActivity = getIntent();
+        final Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity != null) {
             if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
@@ -29,6 +33,33 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    // TODO (3) Create a menu with an item with id of action_share
-    // TODO (4) Display the menu and implement the forecast sharing functionality
+
+    // DONE (3) Create a menu with an item with id of action_share
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /* Use AppCompatActivity's method getMenuInflater to get a handle on the menu inflater */
+        /* Use the inflater's inflate method to inflate our menu layout to this menu */
+        getMenuInflater().inflate(R.menu.detail, menu);
+
+        /* Return true so that the menu is displayed in the Toolbar */
+        return true;
+    }
+
+
+    // DONE (4) Display the menu and implement the forecast sharing functionality
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int itemId = item.getItemId();
+
+        if (itemId == R.id.action_share_detail) {
+            ShareCompat.IntentBuilder.from(this)
+                                     .setChooserTitle(R.string.action_shareDetail)
+                                     .setType(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                     .setText(getIntent().getStringExtra(Intent.EXTRA_TEXT))
+                                     .startChooser();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
