@@ -158,8 +158,10 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             protected void onStartLoading() {
                 if (mWeatherData != null) {
+                    Log.d(TAG, "Cache is used!)");
                     deliverResult(mWeatherData);
                 } else {
+                    Log.d(TAG, "No Cache is used!)");
                     mLoadingIndicator.setVisibility(View.VISIBLE);
                     forceLoad();
                 }
