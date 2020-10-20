@@ -16,6 +16,10 @@
 package com.example.android.sunshine.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v7.preference.PreferenceManager;
+
+import com.example.android.sunshine.R;
 
 public class SunshinePreferences {
 
@@ -87,22 +91,21 @@ public class SunshinePreferences {
      * "94043,USA" if SharedPreferences have not been implemented yet.
      */
     public static String getPreferredWeatherLocation(Context context) {
-        // TODO (1) Return the user's preferred location
-        /** This will be implemented in a future lesson **/
-        return getDefaultWeatherLocation();
+        // DONE (1) Return the user's preferred location
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(context.getString(R.string.pref_location_key), "");
     }
 
     /**
      * Returns true if the user has selected metric temperature display.
      *
      * @param context Context used to get the SharedPreferences
-     *
      * @return true If metric display should be used
      */
     public static boolean isMetric(Context context) {
-        // TODO (2) Return true if the user's preference for units is metric, false otherwise
-        /** This will be implemented in a future lesson **/
-        return true;
+        // DONE (2) Return true if the user's preference for units is metric, false otherwise
+        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return "metric".equals(preferences.getString(context.getString(R.string.pref_units_key), ""));
     }
 
     /**
