@@ -46,13 +46,17 @@
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
 
         <!--The manifest entry for our SettingsActivity. Each Activity requires a manifest entry-->
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".SettingsActivity" />
 
-        <!-- TODO (4) Register WeatherProvider in the manifest with the correct authorities -->
+        <!-- DONE (4) Register WeatherProvider in the manifest with the correct authorities -->
+        <provider
+            android:name="com.example.android.sunshine.data.WeatherProvider"
+            android:authorities="com.example.android.sunshine"
+            android:exported="false" />
 
     </application>
 </manifest>
